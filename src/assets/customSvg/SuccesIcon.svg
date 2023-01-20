@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 48 48">
+  <circle cx="24" cy="24" r="24" fill="url(#a)"/>
+  <path fill="url(#b)" fill-rule="evenodd" d="M35.519 16.468c.308.3.481.707.481 1.132 0 .424-.173.83-.481 1.131l-13.155 12.8c-.308.3-.727.469-1.163.469a1.67 1.67 0 0 1-1.162-.468l-6.577-6.4A1.577 1.577 0 0 1 13 24.005a1.58 1.58 0 0 1 .482-1.118 1.667 1.667 0 0 1 1.148-.468c.431-.004.846.157 1.157.449l5.414 5.269 11.992-11.67a1.67 1.67 0 0 1 1.163-.468c.436 0 .854.169 1.163.468Z" clip-rule="evenodd"/>
+  <defs>
+    <linearGradient id="a" x1="54.252" x2="-27.86" y1="-70.255" y2="-69.822" gradientUnits="userSpaceOnUse">
+      <stop offset=".161" stop-color="#10B089"/>
+      <stop offset="1" stop-color="#2E3BBC"/>
+    </linearGradient>
+    <linearGradient id="b" x1="36.767" x2="24.53" y1="13.333" y2="48.674" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#979EB0"/>
+      <stop offset=".2" stop-color="#E4E6EB"/>
+      <stop offset=".283" stop-color="#F3F4F6"/>
+      <stop offset=".37" stop-color="#FDFDFD"/>
+      <stop offset=".592" stop-color="#fff"/>
+      <stop offset=".711" stop-color="#D6D9E0"/>
+      <stop offset="1" stop-color="#979EB0"/>
+    </linearGradient>
+  </defs>
+</svg>

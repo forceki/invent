@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="362" height="1094" fill="none" viewBox="0 0 362 1094">
+  <g filter="url(#a)">
+    <path fill="#fff" d="M6 7h348v1080H6z"/>
+  </g>
+  <g opacity=".04">
+    <path fill="url(#b)" d="M6.002 437.48h306v260.838h-306z"/>
+    <path fill="url(#c)" d="M97.002 636.54h257v260.838h-257z"/>
+    <path fill="url(#d)" d="M0 0h164v260.838H0z" transform="matrix(1 0 0 -1 6.002 931.699)"/>
+    <path fill="url(#e)" d="M0 0h256v259H0z" transform="matrix(1 0 0 -1 6 1087)"/>
+    <path fill="url(#f)" d="M0 0h257v227H0z" transform="matrix(1 0 0 -1 97 1087)"/>
+    <path fill="url(#g)" d="M354 630.657h257v260.838H354z" transform="rotate(-180 354 630.657)"/>
+    <path fill="url(#h)" d="M354 267.838h348v260.838H354z" transform="rotate(-180 354 267.838)"/>
+    <path fill="url(#i)" d="M6.002 197.235h281v260.838h-281z"/>
+    <path fill="url(#j)" d="M354.001 458.073h162v260.838h-162z" transform="rotate(180 354.001 458.073)"/>
+  </g>
+  <defs>
+    <pattern id="b" width="1" height="1" patternContentUnits="objectBoundingBox">
+      <use xlink:href="#k" transform="matrix(.00327 0 0 .00376 -.549 0)"/>
+    </pattern>
+    <pattern id="c" width="1" height="1" patternContentUnits="objectBoundingBox">
+      <use xlink:href="#k" transform="scale(.0039 .00376)"/>
+    </pattern>
+    <pattern id="d" width="1" height="1" patternContentUnits="objectBoundingBox">
+      <use xlink:href="#k" transform="matrix(.0061 0 0 .00376 -1.89 0)"/>
+    </pattern>
+    <pattern id="e" width="1" height="1" patternContentUnits="objectBoundingBox">
+      <use xlink:href="#k" transform="matrix(.0039 0 0 .00704 -.852 -.873)"/>
+    </pattern>
+    <pattern id="f" width="1" height="1" patternContentUnits="objectBoundingBox">
+      <use xlink:href="#k" transform="matrix(.0039 0 0 .00917 .58 -1.225)"/>
+    </pattern>
+    <pattern id="g" width="1" height="1" patternContentUnits="objectBoundingBox">
+      <use xlink:href="#k" transform="matrix(.0039 0 0 .00376 -.844 0)"/>
+    </pattern>
+    <pattern id="h" width="1" height="1" patternContentUnits="objectBoundingBox">
+      <use xlink:href="#k" transform="matrix(.00287 0 0 .00376 -.052 0)"/>
+    </pattern>
+    <pattern id="i" width="1" height="1" patternContentUnits="objectBoundingBox">
+      <use xlink:href="#k" transform="matrix(.00356 0 0 .00376 -.687 0)"/>
+    </pattern>
+    <pattern id="j" width="1" height="1" patternContentUnits="objectBoundingBox">
+      <use xlink:href="#k" transform="matrix(.00617 0 0 .00376 -1.926 0)"/>
+    </pattern>
+    <filter id="a" width="362" height="1094" x="0" y="0" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+      <feOffset dx="1"/>
+      <feGaussianBlur stdDeviation="3.5"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+      <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_1320_3287"/>
+      <feBlend in="SourceGraphic" in2="effect1_dropShadow_1320_3287" result="shape"/>
+    </filter>
+  </defs>
+</svg>

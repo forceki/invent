@@ -1,0 +1,25 @@
+@import "./base.css";
+@import "./custom.css";
+@import "./calendar.css";
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  font-weight: normal;
+}
+
+body{
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #101223;
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+}
+
