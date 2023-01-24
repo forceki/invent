@@ -3,7 +3,7 @@
         <template #header>
         <div class="card-header">
           <div>
-              <span>Tambah Chekins</span>
+              <span>Tambah Checkins</span>
           </div>
         </div>
       </template>

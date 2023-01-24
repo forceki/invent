@@ -3,10 +3,10 @@
     <template #header>
       <div class="card-header flex justify-between">
         <div>
-            <span>List Chekins</span>
+            <span>List Checkins</span>
         </div>
         <div>
-          <router-link to="/chekin/add">
+          <router-link to="/checkins/add">
             <el-button class="button">Tambah</el-button>
           </router-link>
         </div>

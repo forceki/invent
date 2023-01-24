@@ -38,15 +38,15 @@ const DocMenuConfig = [
           ],
         },
         {
-          sectionTitle: "Chekins",
-          route: "/chekin",
+          sectionTitle: "Checkins",
+          route: "/checkins",
           activeIcon: ArchiveColor,
           svgIcon: ArchiveBoxIcon,
           sub: [
             {
               heading: "List Chekin",
               padding: true,
-              route: "/chekin",
+              route: "/checkins",
             }
           ],
         },
