@@ -73,6 +73,25 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path : '/chekin',
+      children : [
+        {
+          path : '/chekin',
+          name : 'list-chekin',
+          padding : true,
+          component : defineAsyncComponent(
+            () => import('../views/chekin/Chekin.vue'))
+        },
+        {
+          path : '/chekin/add',
+          name : 'add-chekin',
+          padding : true,
+          component : defineAsyncComponent(
+            () => import('../views/chekin/ChekinAdd.vue'))
+        },
+      ]
+    },
     // End
     {
       path: '/etc',
