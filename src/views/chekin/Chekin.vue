@@ -3,7 +3,7 @@
     <template #header>
       <div class="card-header flex justify-between">
         <div>
-            <span>List Barang</span>
+            <span>List Chekins</span>
         </div>
         <div>
           <router-link to="/chekin/add">
