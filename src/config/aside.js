@@ -44,7 +44,7 @@ const DocMenuConfig = [
           svgIcon: ArchiveBoxIcon,
           sub: [
             {
-              heading: "List Chekin",
+              heading: "List Checkins",
               padding: true,
               route: "/checkins",
             }
