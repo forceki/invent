@@ -47,6 +47,11 @@ const DocMenuConfig = [
               heading: "List Checkins",
               padding: true,
               route: "/checkins",
+            },
+            {
+              heading: "Add Checkins",
+              padding: true,
+              route: "/checkins/add",
             }
           ],
         },

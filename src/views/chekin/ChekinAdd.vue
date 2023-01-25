@@ -44,7 +44,7 @@
                 </el-form-item>
             </div>
             <div>
-                <el-form-item label="Item" >
+                <el-form-item label="Items">
                     <el-select @change="addItem"  filterable class="w-full" placeholder="search item">
                         <el-option
                             v-for="item in tableData"
