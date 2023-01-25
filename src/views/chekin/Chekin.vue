@@ -32,11 +32,10 @@
           :header-cell-style="{background:'#ECECEC', color:'black'}">
               <el-table-column type="index" :index="indexMethod" label="#"/>
               <el-table-column prop="tanggal" label="Tanggal" /> 
-              <el-table-column prop="nama" label="Nama" />
+              <el-table-column prop="koli" label="Jumlah Koli" width="100" />
               <el-table-column prop="supplier" label="Supplier" />
               <el-table-column prop="gudang" label="Gudang" />
-              <el-table-column prop="qty" label="Qty" />
-              <el-table-column prop="keterangan" label="keterangan" />
+              <el-table-column prop="keterangan" label="keterangan" width="400"/>
               <el-table-column label="Action" header-align="center" align="center" width="max-content">
               <template #default="scope" >
                   <el-dropdown trigger="click" placement="left" >
@@ -91,103 +90,73 @@ const indexMethod = (index: number) => {
 const tableData = [
   {
     tanggal: '01-02-2022',
-    nama: 'Sosis Kanzler',
-    kategori: 'Makanan',
+    koli : 3,
     supplier: 'Kanzler',
     gudang : 'Gudang 1',
-    rak: "41 - W - II",
-    qty: 12,
-    keterangan : "sosis enak"
+    keterangan : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the in"
   },
   {
     tanggal: '01-02-2022',
-    nama: 'Mie Goreng',
-    kategori: 'Makanan',
+    koli : 3,
     supplier: 'Sedaap',
     gudang : 'Gudang 2',
-    rak: "6 - V - IV",
-    qty: 20,
-    keterangan : "mie goreng sedaap"
+    keterangan : "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
   },
   {
     tanggal: '01-02-2022',
-    nama: 'Hoodie Barnet Black',
-    kategori: 'Outwear Hoodie',
+    koli : 3,
     supplier: 'Erigo',
     gudang : 'Gudang 1',
-    rak: "43 - J - III",
-    qty: 10,
-    keterangan : "hoodie barnet"
+    keterangan : ""
   },
   {
     tanggal: '01-02-2022',
-    nama: 'Coach Jacket Your Mind Black ',
-    kategori: 'Outwear Coach Jacket',
+    koli : 3,
     supplier: 'Eriog',
     gudang : 'Gudang 1',
-    rak: "9 - M - V",
-    qty: 10,
-    keterangan : "Jacket Black"
+    keterangan : "Lorem Ipsum is simply dummy text of the printing "
   },
   {
     tanggal: '01-02-2022',
-    nama: 'Novel Norwegian Wood',
-    kategori: 'Buku Novel',
+    koli : 3,
     supplier: 'haruki murakami',
     gudang : 'Gudang 1',
-    rak: "30 - N - V",
-    qty: 5,
-    keterangan : 'Novel yang dibuat oleh haruku murakami'
+    keterangan : "Lorem Ipsum has been the industry's standard dummy text ever since"
   },
   {
     tanggal: '01-01-2023',
-    nama: 'Sosis Kanzler',
-    kategori: 'Makanan',
+    koli : 3,
     supplier: 'Kanzler',
     gudang : 'Gudang 2',
-    rak: "23 - O - IV",
-    qty: 12,
-    keterangan : "sosis enak"
+    keterangan : "Lorem Ipsum has been the industry's standard dummy text ever since"
   },
   {
     tanggal: '01-01-2023',
-    nama: 'Mie Goreng',
-    kategori: 'Makanan',
+    koli : 3,
     supplier: 'Sedaap',
     gudang : 'gudang 2',
-    rak: "16 - L - III",
-    qty: 20,
-    keterangan : "mie goreng sedaap"
+    keterangan : ""
   },
   {
     tanggal: '01-01-2023',
-    nama: 'Hoodie Barnet Black',
-    kategori: 'Outwear Hoodie',
+    koli : 3,
     supplier: 'Erigo',
     gudang : 'Gudang 1',
-    rak: "28 - O - V",
-    qty: 10,
-    keterangan : "hoodie barnet"
+    keterangan : ""
   },
   {
     tanggal: '01-01-2023',
-    nama: 'Coach Jacket Your Mind Black ',
-    kategori: 'Outwear Coach Jacket',
+    koli : 3,
     supplier: 'Eriog',
     gudang : 'Gudang 1',
-    rak: "30 - N - III",
-    qty: 10,
-    keterangan : "Jacket Black"
+    keterangan : ""
   },
   {
     tanggal: '01-01-2023',
-    nama: 'Novel Norwegian Wood',
-    kategori: 'Buku Novel',
+    koli : 3,
     supplier: 'haruki murakami',
     gudang : 'Gudang 2',
-    rak: "30 - M - II",
-    qty: 5,
-    keterangan : 'Novel yang dibuat oleh haruku murakami'
+    keterangan : "Lorem Ipsum has been the industry's standard dummy text ever since"
   }
 ]
 

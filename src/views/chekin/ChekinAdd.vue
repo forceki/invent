@@ -10,13 +10,13 @@
 
       <div>
         <el-form 
-        label-position="left"
+        label-position="top"
         :model="TAMBAH_BARANG"
         status-icon
         style="max-width: 100%"
         label-width="100px"
         > 
-            <div class="grid grid-cols-3 gap-5">
+            <div class="grid grid-cols-3 gap-2">
                 <el-form-item label="Tanggal" prop="tanggal">
                     <el-date-picker
                         type="date"
@@ -24,16 +24,8 @@
                     >
                     </el-date-picker>
                 </el-form-item>
-                <el-form-item label="Nama Barang" prop="nama_barang">
-                    <el-input type="text"/>
-                </el-form-item>
-                <el-form-item label="Qty" prop="satuan">
-                    <el-input v-model="TAMBAH_BARANG.satuan" type="text" />
-                </el-form-item>
-            </div>
-            <div class="grid grid-cols-4 gap-5">
                 <el-form-item label="Supplier" prop="kategori">
-                    <el-select v-model="TAMBAH_BARANG.kategori" filterable>
+                    <el-select v-model="TAMBAH_BARANG.kategori" filterable class="w-full">
                         <el-option
                             v-for="item in Kategori"
                             :label="item.label"
@@ -41,8 +33,8 @@
                         />
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Gudang" prop="kategori">
-                    <el-select filterable>
+                <el-form-item label="Gudang" prop="kategori" >
+                    <el-select filterable class="w-full">
                         <el-option
                             v-for="item in Gudang"
                             :label="item.label"
@@ -51,13 +43,58 @@
                     </el-select>
                 </el-form-item>
             </div>
+            <div>
+                <el-form-item label="Item" >
+                    <el-select @change="addItem"  filterable class="w-full" placeholder="search item">
+                        <el-option
+                            v-for="item in tableData"
+                            :label="item.label"
+                            :value="item.value"
+                        />
+                    </el-select>
+                </el-form-item>
+            </div>
+            <div>
+                <el-table 
+                :data="addData"  
+                table-layout="auto" 
+                max-height="250"
+                class="my-4"
+                :header-cell-style="{background:'#ffffff', color:'black', border :'solid 1px white'}"
+                :cell-style="{border :'solid 1px white'}"
+                >
+                    <el-table-column label="#" width="50">
+                        <template #default="scope">
+                            <div @click="Delete(scope.row.value)" class="cursor-pointer">
+                                <i class="fa-solid fa-trash text-red-500"></i>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="label" label="Item"/>
+                    <el-table-column prop="berat" label="Weight">
+                        <template #default="scope">
+                            <el-input type="number" v-model="scope.row.berat" />
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="qty" label="Quantity">
+                        <template #default="scope">
+                            <el-input type="number" v-model="scope.row.qty" />
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
+            <div class="grid grid-cols-5">
+                <el-form-item label="Jumlah Koli" prop="nama_barang">
+                        <el-input type="number" />
+                </el-form-item>
+            </div>
             <div class="grid grid-cols-1 gap-5">
                 <el-form-item label="Keterangan" prop="brandName">
                     <el-input v-model="TAMBAH_BARANG.brandName" type="textarea"/>
                 </el-form-item>
             </div>
         </el-form>
-        <div class="w-40 flex justify-around items-center">
+        <div class="w-40">
             <el-button type="success">
                 Tambah
             </el-button>
@@ -69,8 +106,14 @@
 </template>
 
 <script setup lang="ts">
+import { faBorderAll } from '@fortawesome/free-solid-svg-icons';
+import { add, split } from 'lodash';
 import { reactive , ref} from 'vue';
 
+
+const item = reactive({
+    id : ''
+})
 const TAMBAH_BARANG = reactive({
     nama_barang : '',
     kategori : '',
@@ -114,4 +157,46 @@ const Gudang = reactive([
         label : "Gudang 2"
     }
 ])
+
+const addData = reactive([])
+const tableData = [
+  {
+    value : 1,
+    label: 'Sosis Kanzler',
+    qty: 12,
+    berat :1 
+  },
+  {
+    value : 2,
+    label: 'Mie Goreng',
+    qty: 20,
+    berat : 5
+  },
+  {
+    value : 3,
+    label: 'Hoodie Barnet Black',
+    qty: 10,
+    berat : 8
+  }
+]
+
+const addItem = (e) => {
+    tableData.map((item) => {
+        if(item.value == e){
+            addData.push(item)
+        }
+    })
+}
+
+const Delete = (id) => {
+    console.log(id)
+    addData.map((item,index) => {
+        if(item.value == id){
+            addData.splice(index,1)
+        }
+    })
+}
+
+
+
 </script>
