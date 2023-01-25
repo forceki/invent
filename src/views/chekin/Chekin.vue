@@ -32,7 +32,7 @@
           :header-cell-style="{background:'#ECECEC', color:'black'}">
               <el-table-column type="index" :index="indexMethod" label="#"/>
               <el-table-column prop="tanggal" label="Tanggal" /> 
-              <el-table-column prop="koli" label="Jumlah Koli" width="100" />
+              <el-table-column prop="koli" label="Jumlah Koli" width="100" align="center" />
               <el-table-column prop="supplier" label="Supplier" />
               <el-table-column prop="gudang" label="Gudang" />
               <el-table-column prop="keterangan" label="keterangan" width="400"/>

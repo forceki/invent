@@ -71,12 +71,12 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="label" label="Item"/>
-                    <el-table-column prop="berat" label="Weight">
+                    <el-table-column prop="berat" label="Weight" align="center">
                         <template #default="scope">
                             <el-input type="number" v-model="scope.row.berat" />
                         </template>
                     </el-table-column>
-                    <el-table-column prop="qty" label="Quantity">
+                    <el-table-column prop="qty" label="Quantity" align="center">
                         <template #default="scope">
                             <el-input type="number" v-model="scope.row.qty" />
                         </template>
