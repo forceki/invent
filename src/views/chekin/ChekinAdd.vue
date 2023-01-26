@@ -16,13 +16,17 @@
         style="max-width: 100%"
         label-width="100px"
         > 
-            <div class="grid grid-cols-3 gap-2">
+            <div class="grid grid-cols-4 gap-2">
                 <el-form-item label="Tanggal" prop="tanggal">
                     <el-date-picker
                         type="date"
                         placeholder="Pilih Tanggal"
+                        v-model="TAMBAH_BARANG.barcode"
                     >
                     </el-date-picker>
+                </el-form-item>
+                <el-form-item label="Jumlah Koli">
+                        <el-input type="number"  v-model="TAMBAH_BARANG.koli" />
                 </el-form-item>
                 <el-form-item label="Supplier" prop="kategori">
                     <el-select v-model="TAMBAH_BARANG.kategori" filterable class="w-full">
@@ -34,7 +38,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Gudang" prop="kategori" >
-                    <el-select filterable class="w-full">
+                    <el-select filterable class="w-full" v-model="TAMBAH_BARANG.gudang">
                         <el-option
                             v-for="item in Gudang"
                             :label="item.label"
@@ -45,7 +49,7 @@
             </div>
             <div>
                 <el-form-item label="Items">
-                    <el-select @change="addItem"  filterable class="w-full" placeholder="search item">
+                    <el-select @change="addItem"  filterable class="w-full" placeholder="cari item">
                         <el-option
                             v-for="item in tableData"
                             :label="item.label"
@@ -71,22 +75,12 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="label" label="Item"/>
-                    <el-table-column prop="berat" label="Weight" align="center">
-                        <template #default="scope">
-                            <el-input type="number" v-model="scope.row.berat" />
-                        </template>
-                    </el-table-column>
                     <el-table-column prop="qty" label="Quantity" align="center">
                         <template #default="scope">
                             <el-input type="number" v-model="scope.row.qty" />
                         </template>
                     </el-table-column>
                 </el-table>
-            </div>
-            <div class="grid grid-cols-5">
-                <el-form-item label="Jumlah Koli" prop="nama_barang">
-                        <el-input type="number" />
-                </el-form-item>
             </div>
             <div class="grid grid-cols-1 gap-5">
                 <el-form-item label="Keterangan" prop="brandName">
@@ -117,9 +111,10 @@ const item = reactive({
 const TAMBAH_BARANG = reactive({
     nama_barang : '',
     kategori : '',
-    satuan : '',
+    koli : '',
     brandName : '',
     barcode : '',
+    gudang : ''
 })
 
 const Kategori = reactive([
