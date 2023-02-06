@@ -184,7 +184,7 @@ import {user} from '@/stores/user.ts';
 import {useBreadcrumbStore} from '../../stores/breadcrumb'
 import {useLayoutStore} from '../../stores/layout'
 //Icon Import
-import { ArrowRightIcon, ChevronRightIcon, EnvelopeIcon } from '@heroicons/vue/24/outline'
+import { ArrowRightIcon, ChevronRightIcon, EnvelopeIcon,AdjustmentsIcon } from '@heroicons/vue/24/outline'
 
 //Image Import
 import Logos from '../../assets/image/sbd-logos.png'

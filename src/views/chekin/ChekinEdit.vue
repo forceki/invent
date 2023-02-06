@@ -120,6 +120,7 @@ import { SuccessSwal, FailledSwal } from '../../components/SwallAlert/Alert'
 import { FormInstance, FormRules } from 'element-plus';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
+import routers from '@/router'
 
 const ruleFormRef = ref<FormInstance>()
 const TAMBAH_BARANG = reactive({
@@ -242,7 +243,7 @@ const Submit = async (formEl: FormInstance | undefined) => {
                 SuccessSwal('success','Berhasil Mengedit Checkins')
                 loading.value = false
                 addData.length = 0
-                GetData()
+                routers.push("/checkins")
              } catch (error) {
                 console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)

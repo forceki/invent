@@ -119,6 +119,7 @@ import { SuccessSwal, FailledSwal } from '../../components/SwallAlert/Alert'
 
 import { FormInstance, FormRules } from 'element-plus';
 import axios from 'axios';
+import router from '@/router';
 
 const ruleFormRef = ref<FormInstance>()
 const TAMBAH_BARANG = reactive({
@@ -205,6 +206,7 @@ const Submit = async (formEl: FormInstance | undefined) => {
                 })
                 loading.value = false
                 addData.length = 0
+                router.push("/checkins")
              } catch (error) {
                 console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)

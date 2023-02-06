@@ -27,7 +27,7 @@
                         <el-option
                             v-for="item in Kategori"
                             :label="item.nama"
-                            :value="item.id"
+                            :value="parseInt(item.id)"
                         />
                     </el-select>
                 </el-form-item>
@@ -70,6 +70,8 @@ import Swal from 'sweetalert2';
 import { reactive , ref} from 'vue';
 import { SuccessSwal, FailledSwal } from '../../components/SwallAlert/Alert'
 import { getKategori, parse } from '../../stores/master';
+import router from '@/router';
+
 const loading = ref(false)
 const ruleFormRef = ref<FormInstance>()
 const TAMBAH_BARANG = reactive({
@@ -96,6 +98,7 @@ const Submit = async (formEl: FormInstance | undefined) => {
                     detail : ''
                 })
                 loading.value = false
+                router.push("/item")
              } catch (error) {
                 console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)

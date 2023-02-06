@@ -38,7 +38,7 @@
             <el-table-column prop="detail" label="Keterangan" />
             <el-table-column label="Action" header-align="center" align="center" width="max-content">
             <template #default="scope" >
-                <el-dropdown trigger="click" placement="left" >
+                <!-- <el-dropdown trigger="click" placement="left" >
                     <el-button type="primary" text> <i class="fa-solid fa-ellipsis"></i></el-button>
                     <template #dropdown>
                         <el-dropdown-menu>
@@ -46,7 +46,11 @@
                         <el-dropdown-item class="text-red-500 font-bold" @click="Delete(scope.row.id)">Hapus</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
-                </el-dropdown>
+                </el-dropdown> -->
+                <div class="flex justify-evenly">
+                    <router-link  class="text-blue-500" :to="'/item/edit/'+scope.row.id"><i class="fa-solid fa-pen-to-square"></i></router-link>
+                    <div class="cursor-pointer text-red-500" @click="Delete(scope.row.id)" ><i class="fa-solid fa-trash"></i></div>
+                  </div>
             </template>
         </el-table-column>
         </el-table>

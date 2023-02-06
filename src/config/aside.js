@@ -2,13 +2,13 @@ import { ArrowUpOnSquareIcon, ArchiveBoxIcon, ChartPieIcon } from '@heroicons/vu
 import { PenerbitanColor, ArchiveColor, DashboardColor, PengendalianColor, SubrogasiColor, Entry, EntrySide } from '../assets/customSvg';
 import Cookies from 'js-cookie'
 const DocMenuConfig = [
-        {
-          sectionTitle: "Dashboard",
-          route: "/dashboard",
-          svgIcon: ChartPieIcon,
-          activeIcon: DashboardColor,
-          padding: false
-        },
+        // {
+        //   sectionTitle: "Dashboard",
+        //   route: "/dashboard",
+        //   svgIcon: ChartPieIcon,
+        //   activeIcon: DashboardColor,
+        //   padding: false
+        // },
         {
           sectionTitle: "Checkins",
           route: "/checkins",
