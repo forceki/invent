@@ -31,27 +31,49 @@
           class="shadow-lg mt-4"
           :header-cell-style="{background:'#ECECEC', color:'black'}">
               <el-table-column type="index" :index="indexMethod" label="#"/>
-              <el-table-column prop="tanggal" label="Tanggal" /> 
-              <el-table-column prop="koli" label="Jumlah Koli" width="100" align="center" />
+              <el-table-column prop="tanggal" label="Tanggal" >
+                <template #default="scope">
+                  <div>{{ moment(scope.row.tanggal).format('DD-MM-YYYY') }}</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="total" label="Jumlah Koli" width="100" align="center" />
               <el-table-column prop="supplier" label="Supplier" />
               <el-table-column prop="gudang" label="Gudang" />
               <el-table-column prop="keterangan" label="keterangan" width="400"/>
               <el-table-column label="Action" header-align="center" align="center" width="max-content">
               <template #default="scope" >
-                  <el-dropdown trigger="click" placement="left" >
+                  <!-- <el-dropdown trigger="click" placement="left" >
                       <el-button type="primary" text> <i class="fa-solid fa-ellipsis"></i></el-button>
                       <template #dropdown>
                           <el-dropdown-menu>
                           <el-dropdown-item >Detail</el-dropdown-item>
-                          <el-dropdown-item class="text-green-500 font-bold">Edit</el-dropdown-item>
-                          <el-dropdown-item class="text-red-500 font-bold">Hapus</el-dropdown-item>
+                          <el-dropdown-item class="text-green-500 font-bold"></el-dropdown-item>
+                          <el-dropdown-item class="text-red-500 font-bold" @click="Delete(scope.row.id)">Hapus</el-dropdown-item>
                           </el-dropdown-menu>
                       </template>
-                  </el-dropdown>
+                  </el-dropdown> -->
+                  <div class="flex justify-evenly">
+                    <div class="cursor-pointer" @click="getDetail(scope.row.id)"><i class="fa-solid fa-circle-info"></i></div>
+                    <router-link  class="text-blue-500" :to="'/checkins/edit/'+scope.row.id"><i class="fa-solid fa-pen-to-square"></i></router-link>
+                    <div class="cursor-pointer text-red-500" @click="Delete(scope.row.id)" ><i class="fa-solid fa-trash"></i></div>
+                  </div>
               </template>
           </el-table-column>
           </el-table>
     </div>
+
+
+    <el-dialog v-model="openModal" title="Detail Checkins">
+      <el-table 
+          :data="dataModal.items"  
+          table-layout="auto" 
+          :header-cell-style="{color:'black'}"
+          >
+        <el-table-column property="nama" label="Nama" width="200" />
+        <el-table-column property="qty" label="qty" width="150" />
+      </el-table>
+    </el-dialog>
+    
     <div class="flex justify-between align-bottom">
         <el-select
         class="mt-4"
@@ -80,86 +102,73 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import { Search } from '@element-plus/icons-vue'
-const search = ref('')
+import axios from 'axios';
+import moment from 'moment';
+import { SuccessSwal, FailledSwal, deleteConfirmSwal } from '../../components/SwallAlert/Alert'
 
+
+
+const search = ref('')
+const openModal = ref(false)
 const indexMethod = (index: number) => {
   return index + 1
 }
 
+const dataModal = reactive({
+  tanggal : '',
+  gudang : '',
+  supplier : '',
+  total : '',
+  keterangan : '',
+  items : []
+})
 
-const tableData = [
-  {
-    tanggal: '01-02-2022',
-    koli : 3,
-    supplier: 'Kanzler',
-    gudang : 'Gudang 1',
-    keterangan : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the in"
-  },
-  {
-    tanggal: '01-02-2022',
-    koli : 3,
-    supplier: 'Sedaap',
-    gudang : 'Gudang 2',
-    keterangan : "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
-  },
-  {
-    tanggal: '01-02-2022',
-    koli : 3,
-    supplier: 'Erigo',
-    gudang : 'Gudang 1',
-    keterangan : ""
-  },
-  {
-    tanggal: '01-02-2022',
-    koli : 3,
-    supplier: 'Eriog',
-    gudang : 'Gudang 1',
-    keterangan : "Lorem Ipsum is simply dummy text of the printing "
-  },
-  {
-    tanggal: '01-02-2022',
-    koli : 3,
-    supplier: 'haruki murakami',
-    gudang : 'Gudang 1',
-    keterangan : "Lorem Ipsum has been the industry's standard dummy text ever since"
-  },
-  {
-    tanggal: '01-01-2023',
-    koli : 3,
-    supplier: 'Kanzler',
-    gudang : 'Gudang 2',
-    keterangan : "Lorem Ipsum has been the industry's standard dummy text ever since"
-  },
-  {
-    tanggal: '01-01-2023',
-    koli : 3,
-    supplier: 'Sedaap',
-    gudang : 'gudang 2',
-    keterangan : ""
-  },
-  {
-    tanggal: '01-01-2023',
-    koli : 3,
-    supplier: 'Erigo',
-    gudang : 'Gudang 1',
-    keterangan : ""
-  },
-  {
-    tanggal: '01-01-2023',
-    koli : 3,
-    supplier: 'Eriog',
-    gudang : 'Gudang 1',
-    keterangan : ""
-  },
-  {
-    tanggal: '01-01-2023',
-    koli : 3,
-    supplier: 'haruki murakami',
-    gudang : 'Gudang 2',
-    keterangan : "Lorem Ipsum has been the industry's standard dummy text ever since"
+const tableData = reactive([])
+const getCheckins = async() =>{
+
+  tableData.length = 0
+
+  try {
+    
+    const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"checkin")
+    Object.assign(tableData,data.data.data)
+  } catch (error) {
+    FailledSwal("erorr!", error.response.data.message)
   }
-]
 
+} 
+
+getCheckins()
+
+
+const getDetail = async(id)=>{
+  const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"checkin/one",{
+    params : {
+      id : id
+    }
+  })
+  
+  Object.assign(dataModal,data.data.data)
+  openModal.value = true
+}
+
+const Delete = async(id) => {
+  const data =  await deleteConfirmSwal("Hapus Checkin!","anda yakin ingin menghapus?")
+
+  if(data.isConfirmed){
+    try {
+      await axios.delete(import.meta.env.VITE_API_ORIGIN+"checkin",{
+        params : {
+          id : id
+        }
+      })
+      SuccessSwal("Success","Berhasil Menghapus Checkin")
+      getCheckins()
+    } catch (error) {
+      FailledSwal("erorr!", error.response.data.message)
+    }
+  }
+}
 
 const data = reactive({
     total : 10,

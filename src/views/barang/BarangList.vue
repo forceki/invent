@@ -3,10 +3,10 @@
     <template #header>
       <div class="card-header flex justify-between">
         <div>
-            <span>List Barang</span>
+            <span>List Item</span>
         </div>
         <div>
-          <router-link to="/barang/add">
+          <router-link to="/item/add">
             <el-button class="button">Tambah</el-button>
           </router-link>
         </div>
@@ -32,21 +32,18 @@
         :header-cell-style="{background:'#ECECEC', color:'black'}">
             <el-table-column type="index" :index="indexMethod" label="#"/>
             <el-table-column prop="nama" label="Nama" />
-            <el-table-column prop="kategori" label="Katergori" />
-            <el-table-column prop="brandname" label="BrandName" />
+            <el-table-column prop="kategori_nama" label="Katergori" />
             <el-table-column prop="barcode" label="Barcode" />
-            <el-table-column prop="qty" label="Qty" />
             <el-table-column prop="satuan" label="Satuan" />
-            <el-table-column prop="rak" label="Rak" />
+            <el-table-column prop="detail" label="Keterangan" />
             <el-table-column label="Action" header-align="center" align="center" width="max-content">
             <template #default="scope" >
                 <el-dropdown trigger="click" placement="left" >
                     <el-button type="primary" text> <i class="fa-solid fa-ellipsis"></i></el-button>
                     <template #dropdown>
                         <el-dropdown-menu>
-                        <el-dropdown-item >Detail</el-dropdown-item>
-                        <el-dropdown-item class="text-green-500 font-bold">Edit</el-dropdown-item>
-                        <el-dropdown-item class="text-red-500 font-bold">Hapus</el-dropdown-item>
+                        <el-dropdown-item class="text-green-500 font-bold"><router-link :to="'/item/edit/'+scope.row.id">Edit</router-link></el-dropdown-item>
+                        <el-dropdown-item class="text-red-500 font-bold" @click="Delete(scope.row.id)">Hapus</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -82,6 +79,10 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import { Search } from '@element-plus/icons-vue'
+import axios from 'axios';
+import { SuccessSwal, FailledSwal, deleteConfirmSwal } from '../../components/SwallAlert/Alert'
+
+
 const search = ref('')
 
 const indexMethod = (index: number) => {
@@ -89,59 +90,40 @@ const indexMethod = (index: number) => {
 }
 
 
-const tableData = [
-  {
-    nama: 'Sosis Kanzler',
-    kategori: 'Makanan',
-    brandname: 'Kanzler',
-    barcode: '21839101',
-    rak: "23 - O - IV_28 - O - III_41 - U - IV_41 - U - V_41 - W - II",
-    qty: 24,
-    satuan: "Buah",
-    keterangan : "sosis enak"
-  },
-  {
-    nama: 'Mie Goreng',
-    kategori: 'Makanan',
-    brandname: 'Sedaap',
-    barcode: '218391012',
-    rak: "16 - L - III_6 - I - IV_6 - V - IV__",
-    qty: 40,
-    satuan: "Buah",
-    keterangan : "mie goreng sedaap"
-  },
-  {
-    nama: 'Hoodie Barnet Black',
-    kategori: 'Outwear Hoodie',
-    brandname: 'Erigo',
-    barcode: '00ERVC0989',
-    rak: "28 - O - V_43 - I - I_43 - J - III__",
-    qty: 20,
-    satuan: "Buah",
-    keterangan : "hoodie barnet"
-  },
-  {
-    nama: 'Coach Jacket Your Mind Black ',
-    kategori: 'Outwear Coach Jacket',
-    brandname: 'Eriog',
-    barcode: '00ERVC2011',
-    rak: "30 - N - III_30 - P - IV_30 - P - V_9 - M - V_",
-    qty: 20,
-    satuan: "Buah",
-    keterangan : "Jacket Black"
-  },
-  {
-    nama: 'Novel Norwegian Wood',
-    kategori: 'Buku Novel',
-    brandname: 'haruki murakami',
-    barcode: '591801501',
-    rak: "30 - M - II_30 - M - III_30 - M - IV_30 - M - V_30 - N - V",
-    qty: 10,
-    satuan: "Buah",
-    keterangan : 'Novel yang dibuat oleh haruku murakami'
-  }
-]
+const tableData = reactive([])
 
+const getItem = async() => {
+  tableData.length = 0
+  try {
+    const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"items")
+    
+    Object.assign(tableData,data.data.data)
+  } catch (error) {
+    FailledSwal("erorr!", error.response.data.message)
+  }
+  
+
+}
+
+getItem()
+
+const Delete = async(id)=>{
+  const data =  await deleteConfirmSwal("Hapus Item!","anda yakin ingin menghapus?")
+
+  if(data.isConfirmed){
+    try {
+      await axios.delete(import.meta.env.VITE_API_ORIGIN+"items",{
+        params : {
+          id : id
+        }
+      })
+      SuccessSwal("Success","Berhasil Menghapus Item")
+      getItem()
+    } catch (error) {
+      FailledSwal("erorr!", error.response.data.message)
+    }
+  }
+} 
 
 const data = reactive({
     total : 10,

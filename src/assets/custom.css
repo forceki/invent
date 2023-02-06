@@ -9,18 +9,18 @@
 
 /* ScrollBar */
 ::-webkit-scrollbar {
-    width: 13px;
-    height: 13px;
+    width: 5px;
+    height: 5px;
 }
 
 
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(
         to bottom,
-        #0c934c,
+        #0080ff,
         #0052CC
     );
-    border-radius: 50px;
+    border-radius: 10px;
 }
 
 ::-webkit-scrollbar-track {

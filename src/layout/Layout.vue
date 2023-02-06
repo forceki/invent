@@ -1,6 +1,6 @@
 <template >
 
-    <template v-if="route.name != 'Login'">
+    <template v-if="route.name != 'login'">
     <Toasts/>
     <div class="flex overflow-hidden max-h-[100vh]">
         <div class="w-[calc(100vw)]">
@@ -90,6 +90,9 @@ import { useRoute } from 'vue-router'
 import 'moment/dist/locale/id'
 import moment from 'moment'
 import SignIn from './auth/SignIn.vue'
+import Cookies from 'js-cookie'
+import router from '@/router';
+
 
 moment.locale('id')
 
@@ -100,7 +103,13 @@ const sTop = () => {
 }
 const route = useRoute();
 
-
+const chceking = async () => {
+    const check = Cookies.get("access_token")
+    console.log(check)
+    if(check == null || check == "" || check == undefined){
+        router.push("/login");
+    }
+}
 
 onMounted(
     () => {
@@ -131,6 +140,8 @@ onMounted(
             keys[e.keyCode]=false;
             // stop();
         }, false);
+
+        chceking()
             
         }
 );

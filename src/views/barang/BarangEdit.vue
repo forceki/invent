@@ -3,7 +3,7 @@
         <template #header>
         <div class="card-header">
           <div>
-              <span>Tambah Item</span>
+              <span>Edit Item</span>
           </div>
         </div>
       </template>
@@ -68,8 +68,12 @@ import axios from 'axios';
 import { FormInstance, FormRules } from 'element-plus';
 import Swal from 'sweetalert2';
 import { reactive , ref} from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { SuccessSwal, FailledSwal } from '../../components/SwallAlert/Alert'
-import { getKategori, parse } from '../../stores/master';
+
+
+const router = useRoute()
+const params = ref(router.params.id)
 const loading = ref(false)
 const ruleFormRef = ref<FormInstance>()
 const TAMBAH_BARANG = reactive({
@@ -86,8 +90,12 @@ const Submit = async (formEl: FormInstance | undefined) => {
     await formEl.validate( async(valid, fields) => {
         if (valid) {
             try {
-                await axios.post(import.meta.env.VITE_API_ORIGIN+"items",TAMBAH_BARANG)
-                SuccessSwal('success','Berhasil Menambahkan Item')
+                await axios.put(import.meta.env.VITE_API_ORIGIN+"items",TAMBAH_BARANG,{
+                    params : {
+                        id : params.value
+                    }
+                })
+                SuccessSwal('success','Berhasil Edit Item')
                 Object.assign(TAMBAH_BARANG,{
                     nama : '',
                     kategori_id : '',
@@ -124,26 +132,47 @@ const rules = reactive<FormRules>({
     ]
 })
 
+const parse = (data) => {
+    console.log(data)
+    var message = []
+    data.forEach(element => {
+        message.push(element.Message)
+    });
 
+    return message
+} 
 
 const Kategori = reactive([])
 
-// const getKategori = async() => {
-//     try {
-//         const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"kategori")
+const getKategori = async() => {
+    try {
+        const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"kategori")
        
-//         Object.assign(Kategori,data.data.data)
+        Object.assign(Kategori,data.data.data)
         
-//     } catch (error) {
-//         FailledSwal("erorr!", error.response.data.message)
-//     }
-// }
+    } catch (error) {
+        FailledSwal("erorr!", error.response.data.message)
+    }
+}
+const getItem = async()=>{
+    console.log(params)
+    try {
 
-// getKategori()
-
-const kategori = await getKategori()
-
-Object.assign(Kategori,kategori)
+        const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"items",{
+            params : {
+                id : params.value
+            }
+        })
+    
+        console.log(data)
+        Object.assign(TAMBAH_BARANG,data.data.data[0])
+        
+    } catch (error) {
+        FailledSwal("erorr!", error.response.data.message)
+    }
+}
+getItem()
+getKategori()
 
 const Satuan = reactive([
     {

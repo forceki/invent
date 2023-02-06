@@ -12,10 +12,8 @@ export const user = defineStore({
      } as any),
     actions: {
         LOGOUT() {
-            Cookies.remove('accessCode', { domain: '.nexamedia.co.id' });
+            Cookies.remove('access_token');
             this.USER_DATA = {}
-            this.MODULE = []
-            this.ACCESS_LEVEL = null
         },
         SET_USER(payload: any) {
             this.USER_DATA = payload 

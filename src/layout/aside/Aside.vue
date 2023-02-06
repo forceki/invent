@@ -25,7 +25,7 @@
                 async () => {
                     detailUser = false
                     await USER.LOGOUT()
-                    router.push('/welcome')
+                    router.push('/login')
                 }" class="w-full text-sm font-semibold text-slate-500 cursor-pointer hover:bg-blue-100 p-2 flex items-center cursor rounded gap-2">
                 Log Out
             </div>
@@ -120,10 +120,10 @@
                             <img class="min-w-[70px] min-h-[70px] absolute top-2 left-2 shadow-sm z-10 max-w-[50px] max-h-[50px] border rounded object-cover" :src="USER.PFP" />
                             <div class="flex-col absolute right-3 top-3 gap-0">
                                 <p class="font-semibold p-0 m-0 text-slate-700">
-                                    {{USER.USER_DATA.fullname}}
+                                    {{USER.USER_DATA.username}}
                                 </p>
                                 <p class="text-xs text-slate-600 m-0 p-0">
-                                    {{USER.USER_DATA.nip}}
+                                    {{USER.USER_DATA.email}}
                                 </p>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                                 async () => {
                                     detailUser = false
                                     await USER.LOGOUT()
-                                    router.push('/welcome')
+                                    router.push('/login')
                                 }" class="w-full text-sm font-semibold text-slate-500 cursor-pointer hover:bg-blue-100 p-2 flex items-center cursor rounded gap-2">
                                 Log Out
                             </div>
@@ -150,7 +150,7 @@
 
                     </div>
                     <div @click="Object.keys(USER.USER_DATA).length == 0 ? detailUser = false : detailUser == false ? detailUser = true : detailUser = false" class="w-full h-[70px] p-2 items-center flex gap-2 hover:bg-slate-100 active:bg-white cursor-pointer select-none rounded border">
-                        <div v-if="Object.keys(USER.USER_DATA).length == 0" @click="router.push('/welcome')" class="w-full h-full flex justify-center items-center">
+                        <div v-if="Object.keys(USER.USER_DATA).length == 0" @click="router.push('/login')" class="w-full h-full flex justify-center items-center">
                             <p class="font-semibold p-0 m-0 text-slate-700">
                                 Sign In
                             </p>
@@ -159,10 +159,10 @@
                         <div v-if="Object.keys(USER.USER_DATA).length != 0" class="h-full flex-col justify-between">
                             <div class="flex-col gap-0">
                                 <p class="whitespace-nowrap font-semibold p-0 m-0 text-slate-700">
-                                    {{USER.USER_DATA.fullname}}
+                                    {{USER.USER_DATA.username}}
                                 </p>
                                 <p class="text-xs text-blue-600 m-0 p-0">
-                                    {{USER.USER_DATA.nip}}
+                                    {{USER.USER_DATA.email}}
                                 </p>
                             </div>
                         </div>
@@ -180,7 +180,6 @@ import { reactive, ref } from '@vue/reactivity';
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import asideConfig from "../../config/aside";
 import {user} from '@/stores/user.ts';
-
 //Component Import
 import {useBreadcrumbStore} from '../../stores/breadcrumb'
 import {useLayoutStore} from '../../stores/layout'
@@ -200,6 +199,7 @@ const subStatus = reactive({
     activeMain: {},
     activeSub: {}
 })
+
 
 const detailUser = ref(false);
 

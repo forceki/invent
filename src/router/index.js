@@ -9,7 +9,12 @@ const router = createRouter({
       path: "/",
       redirect: "/dashboard",
     },
-    
+    {
+      path: '/login',
+      name: 'login',
+      component: defineAsyncComponent(
+      () => import('../layout/auth/SignIn.vue'))
+    },
     // Master
     {
       path: '/dashboard',
@@ -20,57 +25,29 @@ const router = createRouter({
     },
     //Barang
     {
-      path : '/barang',
+      path : '/item',
       children : [
         {
-          path : '/barang',
-          name : 'list-barang',
+          path : '/item',
+          name : 'list-item',
           padding : true,
           component : defineAsyncComponent(
             () => import('../views/barang/BarangList.vue'))
         },
         {
-          path : '/barang/add',
-          name : 'add-barang',
+          path : '/item/add',
+          name : 'add-item',
           padding : true,
           component : defineAsyncComponent(
             () => import('../views/barang/BarangAdd.vue'))
         },
         {
-          path : '/barang/inventory-in',
-          name : 'inventory-in',
+          path : '/item/edit/:id',
+          name : 'edit-item',
           padding : true,
           component : defineAsyncComponent(
-            () => import('../views/barang/inventory/InventoryIn.vue'))
-        },
-        {
-          path : '/barang/inventory-in/add',
-          name : 'inventory-in-add',
-          padding : true,
-          component : defineAsyncComponent(
-            () => import('../views/barang/inventory/InventoryInAdd.vue'))
-        },
-        {
-          path : '/barang/inventory-out',
-          name : 'inventory-out',
-          padding : true,
-          component : defineAsyncComponent(
-            () => import('../views/barang/inventoryOut/InventoryOut.vue'))
-        },
-        {
-          path : '/barang/inventory-out/add',
-          name : 'inventory-out-add',
-          padding : true,
-          component : defineAsyncComponent(
-            () => import('../views/barang/inventoryOut/InventoryOutAdd.vue'))
-        },
-        {
-          path : '/barang/retur',
-          name : 'retur',
-          padding : true,
-          component : defineAsyncComponent(
-            () => import('../views/barang/retur/Retur.vue'))
-        },
+            () => import('../views/barang/BarangEdit.vue'))
+        }
       ]
     },
     {
@@ -90,6 +67,49 @@ const router = createRouter({
           component : defineAsyncComponent(
             () => import('../views/chekin/ChekinAdd.vue'))
         },
+        {
+          path : '/checkins/edit/:id',
+          name : 'edit-chekin',
+          padding : true,
+          component : defineAsyncComponent(
+            () => import('../views/chekin/ChekinEdit.vue'))
+        },
+      ]
+    },
+    {
+      path : '/gudang',
+      children : [
+        {
+          path : '/gudang',
+          name : 'list-gudang',
+          padding : true,
+          component : defineAsyncComponent(
+            () => import('../views/gudang/Gudang.vue'))
+        }
+      ]
+    },
+    {
+      path : '/supplier',
+      children : [
+        {
+          path : '/supplier',
+          name : 'list-supplier',
+          padding : true,
+          component : defineAsyncComponent(
+            () => import('../views/supplier/Supplier.vue'))
+        }
+      ]
+    },
+    {
+      path : '/kategori',
+      children : [
+        {
+          path : '/kategori',
+          name : 'list-kategori',
+          padding : true,
+          component : defineAsyncComponent(
+            () => import('../views/kategori/Kategori.vue'))
+        }
       ]
     },
     // End

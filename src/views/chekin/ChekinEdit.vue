@@ -3,7 +3,7 @@
         <template #header>
         <div class="card-header">
           <div>
-              <span>Tambah Checkins</span>
+              <span>Edit Checkins</span>
           </div>
         </div>
       </template>
@@ -119,9 +119,11 @@ import { SuccessSwal, FailledSwal } from '../../components/SwallAlert/Alert'
 
 import { FormInstance, FormRules } from 'element-plus';
 import axios from 'axios';
+import { useRoute } from 'vue-router';
 
 const ruleFormRef = ref<FormInstance>()
 const TAMBAH_BARANG = reactive({
+    id : '',
     tanggal : '',
     total : 0,
     supplier_id: '',
@@ -146,12 +148,16 @@ const rules = reactive<FormRules>({
 
 const loading = ref(false)
 const Supplier = reactive([])
+const router = useRoute()
+const params = ref(router.params.id)
+
 const sup = await getSupplier()
 Object.assign(Supplier,sup)
 
 const Gudang = reactive([])
 const gu  = await getMasterGudang()
 Object.assign(Gudang,gu)
+
 const Item = reactive([])
 const item =  await getMasterItem()
 Object.assign(Item,item)
@@ -173,10 +179,44 @@ const Delete = (id) => {
     addData.map((item,index) => {
         if(item.id == id){
             addData.splice(index,1)
-            item.disabled = false
+        }
+    })
+
+    Item.map((it) => {
+        if(it.id == id){
+            it.disabled = false
         }
     })
 }
+
+const GetData = async()=>{
+    const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"checkin/one",{
+        params : {
+            id : params.value
+        }
+    })
+
+    console.log(data)
+    const res = data.data.data
+    TAMBAH_BARANG.gudang_id = res.gudang_id
+    TAMBAH_BARANG.keterangan = res.keterangan
+    TAMBAH_BARANG.supplier_id = res.supplier_id
+    TAMBAH_BARANG.tanggal = res.tanggal
+    TAMBAH_BARANG.total = res.total
+    TAMBAH_BARANG.id = res.id
+
+    res.items.forEach(el => {
+        Item.forEach(item => {
+            if(el.id == item.id){
+                item.disabled = true
+            }
+        });
+    });
+    Object.assign(addData,res.items)
+
+}
+
+GetData()
 
 const Submit = async (formEl: FormInstance | undefined) => {
     loading.value = true
@@ -185,26 +225,24 @@ const Submit = async (formEl: FormInstance | undefined) => {
         if (valid) {
 
             const body = {
+                id : TAMBAH_BARANG.id,
                 tanggal : TAMBAH_BARANG.tanggal,
                 total : TAMBAH_BARANG.total,
                 supplier_id: TAMBAH_BARANG.supplier_id,
                 gudang_id :TAMBAH_BARANG.gudang_id,
                 keterangan : TAMBAH_BARANG.keterangan,
                 details : addData,
-
             }
             try {
-                await axios.post(import.meta.env.VITE_API_ORIGIN+"checkin",body)
-                SuccessSwal('success','Berhasil Menambahkan Checkins')
-                Object.assign(TAMBAH_BARANG,{
-                    tanggal : '',
-                    total : 0,
-                    supplier_id: '',
-                    gudang_id :'',
-                    keterangan : '',
+                await axios.put(import.meta.env.VITE_API_ORIGIN+"checkin",body,{
+                    params :{
+                        id : params.value
+                    }
                 })
+                SuccessSwal('success','Berhasil Mengedit Checkins')
                 loading.value = false
                 addData.length = 0
+                GetData()
              } catch (error) {
                 console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)

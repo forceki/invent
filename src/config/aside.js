@@ -10,34 +10,6 @@ const DocMenuConfig = [
           padding: false
         },
         {
-          sectionTitle: "Barang",
-          route: "/barang",
-          activeIcon: ArchiveColor,
-          svgIcon: ArchiveBoxIcon,
-          sub: [
-            {
-              heading: "List Barang",
-              padding: true,
-              route: "/barang",
-            },
-            {
-              heading: "Inventory In",
-              padding: true,
-              route: "/barang/inventory-in",
-            },
-            {
-              heading: "Inventory Out",
-              padding: true,
-              route: "/barang/inventory-out",
-            },
-            {
-              heading: "Retur Barang",
-              padding: true,
-              route: "/barang/retur",
-            },
-          ],
-        },
-        {
           sectionTitle: "Checkins",
           route: "/checkins",
           activeIcon: ArchiveColor,
@@ -55,7 +27,47 @@ const DocMenuConfig = [
             }
           ],
         },
-        
+        {
+          sectionTitle: "Item",
+          route: "/item",
+          activeIcon: ArchiveColor,
+          svgIcon: ArchiveBoxIcon,
+          sub: [
+            {
+              heading: "List Item",
+              padding: true,
+              route: "/item",
+            },
+            {
+              heading: "Add Item",
+              padding: true,
+              route: "/item/add",
+            }
+          ],
+        },
+        {
+          sectionTitle: "Master",
+          route: "/",
+          activeIcon: ArchiveColor,
+          svgIcon: ArchiveBoxIcon,
+          sub: [
+            {
+              heading: "List Gudang",
+              padding: true,
+              route: "/gudang",
+            },
+            {
+              heading: "List Supplier",
+              padding: true,
+              route: "/supplier",
+            },
+            {
+              heading: "List Kategori",
+              padding: true,
+              route: "/kategori",
+            }
+          ],
+        },
   ];
 
   export default DocMenuConfig;
