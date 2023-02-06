@@ -12,14 +12,17 @@
                     </h1>
                     <el-form 
                     label-position="top"
+                    :rules="rules"
+                    :model="form"
+                    ref="ruleFormRef"
                     >
-                        <el-form-item label="Username">
+                        <el-form-item label="Username" prop="username">
                             <el-input
                                 v-model="form.username"
                                 placeholder="Please input username"
                             />
                         </el-form-item>
-                        <el-form-item label="Password">
+                        <el-form-item label="Password" prop="password">
                             <el-input
                                 v-model="form.password"
                                 type="password"
@@ -27,7 +30,7 @@
                                 show-password
                             />
                         </el-form-item>
-                        <el-button type="primary" @click="LOGGING()">Login</el-button>
+                        <el-button type="primary" @click="LOGGING(ruleFormRef)">Login</el-button>
                     </el-form>
                 </div>
             </div>
@@ -35,7 +38,7 @@
     </div>
 </template>
 
-<script setup >
+<script setup lang="ts">
 
 
 import { user } from "@/stores/user.ts";
@@ -45,7 +48,19 @@ import axios from 'axios'
 import router from '@/router';
 import { reactive, ref, onMounted } from 'vue'
 import { SuccessSwal, FailledSwal } from '../../components/SwallAlert/Alert'
+import { FormInstance, FormRules } from 'element-plus';
 
+
+const ruleFormRef = ref<FormInstance>()
+
+const rules = reactive<FormRules>({
+    username : [
+        {required : true , message: 'Please input username', trigger: 'blur'}
+    ],
+    password : [
+        {required:true, message: 'Please input password', trigger: 'blur'}
+    ]
+})
 
 
 const form = reactive({
@@ -65,26 +80,31 @@ const chceking = async () => {
 }
 
 
-const LOGGING = async () => {
-  try {
-     const data = await axios.post(import.meta.env.VITE_API_ORIGIN + "auth/login", form);
+const LOGGING = async (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    await formEl.validate( async(valid, fields) => {
+        if (valid) {
+            try {
+                const data = await axios.post(import.meta.env.VITE_API_ORIGIN + "auth/login", form);
 
-    // console.log(data);
-    // // if (data.success == 1) {
-    Cookies.set("access_token", data.data.data.token);
+                // console.log(data);
+                // // if (data.success == 1) {
+                Cookies.set("access_token", data.data.data.token);
 
-    USER.SET_USER(data.data.data.user);
-    // USER.setUserModule(data.data.module);
-    router.push("/dashboard");
-    // } else {
-    // window.location.href = import.meta.env.VITE_API_LOGIN_PAGE_SSO;
-    // }
-  } catch (error) {
-   // window.location.href = import.meta.env.VITE_API_LOGIN_PAGE_SSO;
-    console.log(error);
-    FailledSwal("erorr!", error.response.data.message)
+                USER.SET_USER(data.data.data.user);
+                // USER.setUserModule(data.data.module);
+                router.push("/dashboard");
+                // } else {
+                // window.location.href = import.meta.env.VITE_API_LOGIN_PAGE_SSO;
+                // }
+            } catch (error) {
+            // window.location.href = import.meta.env.VITE_API_LOGIN_PAGE_SSO;
+                console.log(error);
+                FailledSwal("erorr!", error.response.data.message)
 
-  }
+            }
+        }
+    })
 };
 
 onMounted(
