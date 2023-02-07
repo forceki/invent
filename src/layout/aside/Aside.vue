@@ -73,7 +73,8 @@
                         :class="subStatus.activeMain.sectionTitle == item.sectionTitle ? 'bg-slate-100 shadow rounded' : 'bg-white/0 hover:bg-white/10 rounded-[100%]'"
                         class="group flex flex-col justify-center items-center ease-out border-white/0 border hover:rounded   transition-all  min-w-[50px] min-h-[50px] active:border-white/50 text-slate-300 hover:text-blue-100" :title="item.sectionTitle">
                         <component v-if="subStatus.activeMain.sectionTitle != item.sectionTitle" :is="item.svgIcon" class="group-active:scale-90 group-active:transition-none group-hover:scale-110 p-0 m-0 transition-all duration-300 ease-out w-[25px] h-auto"/>
-                        <img v-else style="min-height: 25px; min-width:25px;max-width:25px; max-height: 25px;" class="slide-down" :src="item.activeIcon" alt="My Happy SVG"/>
+                        <component v-else :is="item.activeIcon" class="group-active:scale-90 group-active:transition-none group-hover:scale-110 p-0 m-0 transition-all duration-300 ease-out w-[25px] h-auto text-black"/>
+                        <!-- <img v-else style="min-height: 25px; min-width:25px;max-width:25px; max-height: 25px;" class="slide-down" :src="item.activeIcon" alt="My Happy SVG"/> -->
                     </button>
                 </div>
                 <div class="justify-self-end">
@@ -184,7 +185,7 @@ import {user} from '@/stores/user.ts';
 import {useBreadcrumbStore} from '../../stores/breadcrumb'
 import {useLayoutStore} from '../../stores/layout'
 //Icon Import
-import { ArrowRightIcon, ChevronRightIcon, EnvelopeIcon } from '@heroicons/vue/24/outline'
+import { ArrowRightIcon, ChevronRightIcon, EnvelopeIcon,AdjustmentsHorizontalIcon,ArrowUpOnSquareIcon,InboxArrowDownIcon} from '@heroicons/vue/24/outline'
 
 //Image Import
 import Logos from '../../assets/image/sbd-logos.png'

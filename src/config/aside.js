@@ -1,19 +1,12 @@
-import { ArrowUpOnSquareIcon, ArchiveBoxIcon, ChartPieIcon } from '@heroicons/vue/24/outline'
+import { ArrowDownOnSquareIcon, ArchiveBoxIcon, ChartPieIcon, AdjustmentsHorizontalIcon, InboxArrowDownIcon } from '@heroicons/vue/24/outline'
 import { PenerbitanColor, ArchiveColor, DashboardColor, PengendalianColor, SubrogasiColor, Entry, EntrySide } from '../assets/customSvg';
 import Cookies from 'js-cookie'
 const DocMenuConfig = [
         {
-          sectionTitle: "Dashboard",
-          route: "/dashboard",
-          svgIcon: ChartPieIcon,
-          activeIcon: DashboardColor,
-          padding: false
-        },
-        {
           sectionTitle: "Checkins",
           route: "/checkins",
-          activeIcon: ArchiveColor,
-          svgIcon: ArchiveBoxIcon,
+          activeIcon: InboxArrowDownIcon,
+          svgIcon: InboxArrowDownIcon,
           sub: [
             {
               heading: "List Checkins",
@@ -30,7 +23,7 @@ const DocMenuConfig = [
         {
           sectionTitle: "Item",
           route: "/item",
-          activeIcon: ArchiveColor,
+          activeIcon: ArchiveBoxIcon,
           svgIcon: ArchiveBoxIcon,
           sub: [
             {
@@ -48,8 +41,8 @@ const DocMenuConfig = [
         {
           sectionTitle: "Master",
           route: "/",
-          activeIcon: ArchiveColor,
-          svgIcon: ArchiveBoxIcon,
+          activeIcon: AdjustmentsHorizontalIcon,
+          svgIcon: AdjustmentsHorizontalIcon,
           sub: [
             {
               heading: "List Gudang",
