@@ -28,7 +28,40 @@
           height="300"
           class="shadow-lg mt-4"
           :header-cell-style="{background:'#ECECEC', color:'black'}">
-              <el-table-column type="index" :index="indexMethod" label="#"/>
+              <el-table-column type="expand" :index="indexMethod" label="#">
+                <div>
+                    <el-table 
+                        :data="DataRack" 
+                        style="width: 500px;margin-left: 10px;"
+                        table-layout="auto" 
+                        :border="false"
+                        >
+                            <el-table-column type="index" :index="indexMethod" label="#"/>
+                            <el-table-column prop="nama" label="Nama Rak"/>
+                            <el-table-column label="Action" header-align="center" align="center" width="max-content">
+                            <template #default="scope" >
+                                <div class="flex justify-evenly">
+                                    <div class="cursor-pointer text-red-500" @click="Delete(scope.row.id)" ><i class="fa-solid fa-trash"></i></div>
+                                </div>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+                <!-- <el-table 
+                    :data="DataRack" 
+                    table-layout="auto" 
+                    >
+                        <el-table-column type="index" :index="indexMethod" label="#"/>
+                        <el-table-column prop="nama" label="Nama Rak"/>
+                        <el-table-column label="Action" header-align="center" align="center" width="max-content">
+                        <template #default="scope" >
+                            <div class="flex justify-evenly">
+                                <div class="cursor-pointer text-red-500" @click="Delete(scope.row.id)" ><i class="fa-solid fa-trash"></i></div>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    </el-table> -->
+              </el-table-column>
               <el-table-column prop="nama" label="Nama Gudang"/>
               <el-table-column prop="alamat" label="Alamat" />
               <el-table-column prop="status" label="Status"  align="center">
@@ -39,15 +72,11 @@
               </el-table-column>
               <el-table-column label="Action" header-align="center" align="center" width="max-content">
               <template #default="scope" >
-                  <el-dropdown trigger="click" placement="left" >
-                      <el-button type="primary" text> <i class="fa-solid fa-ellipsis"></i></el-button>
-                      <template #dropdown>
-                          <el-dropdown-menu>
-                          <el-dropdown-item class="text-green-500 font-bold" @click="Diff('edit',scope.row)">Edit</el-dropdown-item>
-                          <el-dropdown-item class="text-red-500 font-bold" @click="Delete(scope.row.id)">Hapus</el-dropdown-item>
-                          </el-dropdown-menu>
-                      </template>
-                  </el-dropdown>
+                  <div class="flex justify-evenly">
+                    <div class="cursor-pointer" @click="OpenDetail(scope.row)"><i class="fa-solid fa-circle-info"></i></div>
+                    <div  class="text-blue-500" @click="Diff('edit',scope.row)"><i class="fa-solid fa-pen-to-square"></i></div>
+                    <div class="cursor-pointer text-red-500" @click="Delete(scope.row.id)" ><i class="fa-solid fa-trash"></i></div>
+                  </div>
               </template>
           </el-table-column>
           </el-table>
@@ -80,6 +109,39 @@
     </el-dialog>
 
 
+
+    <!-- list rack -->
+    <el-dialog v-model="openDetail" title="Detail Gudang">
+        <el-divider content-position="left">Add Rack</el-divider>
+        <div class="mb-2">
+         <el-table 
+          :data="DataRack" 
+          table-layout="auto" 
+          height="250"
+          class="mt-4"
+          :header-cell-style="{background:'#ECECEC', color:'black'}">
+              <el-table-column type="index" :index="indexMethod" label="#"/>
+              <el-table-column prop="nama" label="Nama Rak"/>
+              <!-- <el-table-column prop="rack_location" label="Lokasi Rack" /> -->
+              <el-table-column label="Action" header-align="center" align="center" width="max-content">
+              <template #default="scope" >
+                  <div class="flex justify-evenly">
+                    <!-- <div class="cursor-pointer" @click="OpenDetail(scope.row)"><i class="fa-solid fa-circle-info"></i></div>
+                    <div  class="text-blue-500" @click="Diff('edit',scope.row)"><i class="fa-solid fa-pen-to-square"></i></div> -->
+                    <div class="cursor-pointer text-red-500" @click="Delete(scope.row.id)" ><i class="fa-solid fa-trash"></i></div>
+                  </div>
+              </template>
+          </el-table-column>
+          </el-table>
+        </div>
+        <template #footer>
+        <span class="dialog-footer">
+            <el-button @click="openDetail = false">Cancel</el-button>
+            <el-button type="primary" @click="AddRack">Tambah Rak</el-button>
+        </span>
+        </template>
+    </el-dialog>
+    <!-- end list rack -->
 
 
     <div class="flex justify-between align-bottom">
@@ -120,9 +182,16 @@ const search = ref('')
 const dialogFormVisible = ref(false)
 const loading = ref(false)
 const isCreate = ref(false)
-
+const openDetail = ref(false)
+const addRack = ref(false)
 const indexMethod = (index: number) => {
   return index + 1
+}
+
+
+const AddRack = () =>{
+    openDetail.value = false
+    addRack.value = true
 }
 
 const tableData = reactive([])
@@ -239,6 +308,15 @@ const Update = async (formEl: FormInstance | undefined) => {
     })
 }
 
+const OpenDetail = async (e) =>{
+    console.log(e)
+    openDetail.value = true 
+}
+
+const DataRack = reactive([
+    {nama : "MT"},
+    {nama : "TY"}
+])
 
 const rules = reactive<FormRules>({
     nama : [

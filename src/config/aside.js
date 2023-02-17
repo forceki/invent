@@ -45,17 +45,17 @@ const DocMenuConfig = [
           svgIcon: AdjustmentsHorizontalIcon,
           sub: [
             {
-              heading: "List Gudang",
+              heading: "Gudang",
               padding: true,
               route: "/gudang",
             },
             {
-              heading: "List Supplier",
+              heading: "Supplier",
               padding: true,
               route: "/supplier",
             },
             {
-              heading: "List Kategori",
+              heading: "Kategori",
               padding: true,
               route: "/kategori",
             }
