@@ -1,7 +1,7 @@
 <template>
     <div class="footer dark:bg-[#272727] dark:border-[#1c1c1c] dark:text-slate-200 ">
         <p class="copy">
-            2022©
+            {{ new Date().getFullYear() }}©
         </p>
         <p>
             Forceki

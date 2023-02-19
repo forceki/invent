@@ -7,7 +7,7 @@
         </div>
         <div>
           <router-link to="/checkins/add">
-            <el-button class="button">Tambah</el-button>
+            <el-button type="success">Tambah</el-button>
           </router-link>
         </div>
       </div>

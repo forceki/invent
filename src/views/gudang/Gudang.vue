@@ -6,7 +6,7 @@
             <span>List Gudang</span>
         </div>
         <div>
-            <el-button class="button" @click="Diff('add',null)">Tambah</el-button>
+            <el-button type="success" @click="Diff('add',null)">Tambah</el-button>
         </div>
       </div>
     </template>
@@ -228,6 +228,8 @@ const Delete = async(id) => {
 }
 
 const Diff = async(kind,data) => {
+    for (var member in form) delete form[member];
+    await new Promise(resolve => setTimeout(resolve, 500));
     if(kind == "edit"){
         isCreate.value = false
         dialogFormVisible.value = true

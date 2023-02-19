@@ -43,7 +43,7 @@
                                             {{ layout.$state.loadingStatement != '' ? layout.$state.loadingStatement : 'Loading ...' }}
                                         </p>
                                     </div>
-                                    <div style="flex: 1"  :class="layout.$state.padding ? 'viewMargin ': ''">
+                                    <div style="flex: 1"  :class="layout.$state.padding ? 'viewMargin ': ''" class="p-2">
                                         <router-view v-slot="{ Component }">
                                             <suspense timeout="0">
                                             <template #default>
@@ -105,7 +105,6 @@ const route = useRoute();
 
 const chceking = async () => {
     const check = Cookies.get("access_token")
-    console.log(check)
     if(check == null || check == "" || check == undefined){
         router.push("/login");
     }

@@ -1,6 +1,6 @@
 import { defineAsyncComponent } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-
+import Cookies from 'js-cookie'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,8 +12,8 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: defineAsyncComponent(
-      () => import('../layout/auth/SignIn.vue'))
+      component: defineAsyncComponent(() => import('../layout/auth/SignIn.vue')),
+      meta:{NON_LOGGER:true}
     },
     // Master
     {
@@ -130,7 +130,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-  // document.title = to.name
+  console.log(Cookies.get('access_token'))
+    if(!to.meta.NON_LOGGER && !Cookies.get('access_token')) router.push('/login')
+
   next()
 })
 
