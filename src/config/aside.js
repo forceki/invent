@@ -1,4 +1,4 @@
-import { ArrowDownOnSquareIcon, ArchiveBoxIcon, ChartPieIcon, AdjustmentsHorizontalIcon, InboxArrowDownIcon } from '@heroicons/vue/24/outline'
+import { ArrowDownOnSquareIcon, ArchiveBoxIcon, ChartPieIcon, AdjustmentsHorizontalIcon, InboxArrowDownIcon, ArchiveBoxXMarkIcon } from '@heroicons/vue/24/outline'
 import { PenerbitanColor, ArchiveColor, DashboardColor, PengendalianColor, SubrogasiColor, Entry, EntrySide } from '../assets/customSvg';
 import Cookies from 'js-cookie'
 const DocMenuConfig = [
@@ -37,6 +37,12 @@ const DocMenuConfig = [
               route: "/item/add",
             }
           ],
+        },
+        {
+          sectionTitle: "Retur",
+          route: "/retur",
+          activeIcon: ArchiveBoxXMarkIcon,
+          svgIcon: ArchiveBoxXMarkIcon
         },
         {
           sectionTitle: "Master",

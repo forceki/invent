@@ -6,7 +6,7 @@
             <span>List Kategori</span>
         </div>
         <div>
-            <el-button class="button" @click="Diff('add',null)">Tambah</el-button>
+            <el-button type="success" @click="Diff('add',null)">Tambah</el-button>
         </div>
       </div>
     </template>

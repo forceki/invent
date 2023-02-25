@@ -54,7 +54,7 @@
         </el-form>
         <div >
             <el-button type="success" @click="Submit(ruleFormRef)" :loading="loading">
-                Tambah
+                Edit
             </el-button>
         </div>
       </div>
