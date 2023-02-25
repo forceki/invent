@@ -23,6 +23,13 @@ const router = createRouter({
       component: defineAsyncComponent(
       () => import('../views/Dashboard.vue'))
     },
+    {
+      path: '/retur',
+      name: 'Retur',
+      padding: true,
+      component: defineAsyncComponent(
+      () => import('../views/retur/Retur.vue'))
+    },
     //Barang
     {
       path : '/item',

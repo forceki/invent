@@ -48,6 +48,7 @@
                     </template>
                 </el-dropdown> -->
                 <div class="flex justify-evenly">
+                    <div class="cursor-pointer"><i class="fa-solid fa-circle-info"></i></div>
                     <router-link  class="text-blue-500" :to="'/item/edit/'+scope.row.id"><i class="fa-solid fa-pen-to-square"></i></router-link>
                     <div class="cursor-pointer text-red-500" @click="Delete(scope.row.id)" ><i class="fa-solid fa-trash"></i></div>
                   </div>

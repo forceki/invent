@@ -29,24 +29,27 @@
           class="shadow-lg mt-4"
           :header-cell-style="{background:'#ECECEC', color:'black'}">
               <el-table-column type="expand" :index="indexMethod" label="#">
-                <div>
+
+                <template #default="scope">
+                    <div>
                     <el-table 
-                        :data="DataRack" 
+                        :data="scope.row.rack" 
                         style="width: 500px;margin-left: 10px;"
                         table-layout="auto" 
                         :border="false"
                         >
                             <el-table-column type="index" :index="indexMethod" label="#"/>
-                            <el-table-column prop="nama" label="Nama Rak"/>
+                            <el-table-column prop="rack_name" label="Nama Rak"/>
                             <el-table-column label="Action" header-align="center" align="center" width="max-content">
                             <template #default="scope" >
                                 <div class="flex justify-evenly">
-                                    <div class="cursor-pointer text-red-500" @click="Delete(scope.row.id)" ><i class="fa-solid fa-trash"></i></div>
+                                    <div class="cursor-pointer text-red-500" @click="DeleteRack(scope.row.rack_id)" ><i class="fa-solid fa-trash"></i></div>
                                 </div>
                             </template>
                         </el-table-column>
                     </el-table>
                 </div>
+                </template>
                 <!-- <el-table 
                     :data="DataRack" 
                     table-layout="auto" 
@@ -74,7 +77,7 @@
               <template #default="scope" >
                   <div class="flex justify-evenly">
                     <div class="cursor-pointer" @click="OpenDetail(scope.row)"><i class="fa-solid fa-circle-info"></i></div>
-                    <div  class="text-blue-500" @click="Diff('edit',scope.row)"><i class="fa-solid fa-pen-to-square"></i></div>
+                    <div  class="text-blue-500 cursor-pointer" @click="Diff('edit',scope.row)"><i class="fa-solid fa-pen-to-square"></i></div>
                     <div class="cursor-pointer text-red-500" @click="Delete(scope.row.id)" ><i class="fa-solid fa-trash"></i></div>
                   </div>
               </template>
@@ -113,22 +116,29 @@
     <!-- list rack -->
     <el-dialog v-model="openDetail" title="Detail Gudang">
         <el-divider content-position="left">Add Rack</el-divider>
+        <div class="grid grid-cols-1 gap-2">
+            <span class="w-full">Nama Rak</span>
+            <div class="flex">
+                <el-input v-model="nama_rak" class="w-full"/>
+                <el-button type="primary" @click="addRackLocal">Add</el-button>
+            </div>
+        </div>
         <div class="mb-2">
          <el-table 
-          :data="DataRack" 
+          :data="racks.details" 
           table-layout="auto" 
           height="250"
           class="mt-4"
           :header-cell-style="{background:'#ECECEC', color:'black'}">
               <el-table-column type="index" :index="indexMethod" label="#"/>
-              <el-table-column prop="nama" label="Nama Rak"/>
+              <el-table-column prop="rack_name" label="Nama Rak"/>
               <!-- <el-table-column prop="rack_location" label="Lokasi Rack" /> -->
               <el-table-column label="Action" header-align="center" align="center" width="max-content">
               <template #default="scope" >
                   <div class="flex justify-evenly">
                     <!-- <div class="cursor-pointer" @click="OpenDetail(scope.row)"><i class="fa-solid fa-circle-info"></i></div>
                     <div  class="text-blue-500" @click="Diff('edit',scope.row)"><i class="fa-solid fa-pen-to-square"></i></div> -->
-                    <div class="cursor-pointer text-red-500" @click="Delete(scope.row.id)" ><i class="fa-solid fa-trash"></i></div>
+                    <div class="cursor-pointer text-red-500" @click="deleteRackLocal(scope.$index)" ><i class="fa-solid fa-trash"></i></div>
                   </div>
               </template>
           </el-table-column>
@@ -183,15 +193,66 @@ const dialogFormVisible = ref(false)
 const loading = ref(false)
 const isCreate = ref(false)
 const openDetail = ref(false)
-const addRack = ref(false)
 const indexMethod = (index: number) => {
   return index + 1
 }
 
 
-const AddRack = () =>{
-    openDetail.value = false
-    addRack.value = true
+const nama_rak = ref("")
+const racks = reactive({
+    gudang_id : "",
+    details : []
+})
+const AddRack = async() =>{
+    const body = {
+        gudang_id : racks.gudang_id,
+        details : racks.details
+    }
+
+    try {
+        axios.post(import.meta.env.VITE_API_ORIGIN+"gudang/rack",body)
+        SuccessSwal('success','Berhasil Menambahkan rak')
+        Object.assign(racks,{
+            gudang_id : "",
+            details : []
+        })
+        setTimeout(() => {
+            openDetail.value = false
+        }, 200);
+    } catch (error) {
+        FailledSwal("erorr!", error.response.data.message)
+    }
+}
+
+const addRackLocal = () => {
+    racks.details.push({rack_name : nama_rak.value})
+    nama_rak.value = ""
+
+    console.log(racks)
+}
+
+const deleteRackLocal = (e) => {
+    console.log(e)
+    racks.details.splice(e,1)
+}   
+
+
+const DeleteRack = async(id) => {
+    const data =  await deleteConfirmSwal("Hapus Rack!","anda yakin ingin menghapus?")
+
+    if(data.isConfirmed){
+        try {
+        await axios.delete(import.meta.env.VITE_API_ORIGIN+"gudang/rack",{
+            params : {
+                id : id
+            }
+        })
+        SuccessSwal("Success","Berhasil Menghapus Rack")
+        getData()
+        } catch (error) {
+        FailledSwal("erorr!", error.response.data.message)
+        }
+    }
 }
 
 const tableData = reactive([])
@@ -201,7 +262,18 @@ const getData = async()=>{
     try {
         
         const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"gudang")
-        Object.assign(tableData,data.data.data)
+        const item = data.data.data
+        item.forEach(element => {
+            if(element.rack != ""){
+                element.rack = JSON.parse(element.rack)
+            }else{
+                element.rack = []
+            }
+        });
+        Object.assign(tableData,item)   
+
+        console.log(tableData)
+
     } catch (error) {
         FailledSwal("erorr!", error.response.data.message)
     }
@@ -311,8 +383,8 @@ const Update = async (formEl: FormInstance | undefined) => {
 }
 
 const OpenDetail = async (e) =>{
-    console.log(e)
     openDetail.value = true 
+    racks.gudang_id = e.id
 }
 
 const DataRack = reactive([

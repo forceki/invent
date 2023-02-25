@@ -18,7 +18,7 @@
         style="max-width: 100%"
         label-width="100px"
         > 
-            <div class="grid grid-cols-4 gap-2">
+            <div class="grid grid-cols-3 gap-2">
                 <el-form-item label="Tanggal" prop="tanggal">
                     <el-date-picker
                         type="date"
@@ -26,14 +26,6 @@
                         v-model="TAMBAH_BARANG.tanggal"
                     >
                     </el-date-picker>
-                </el-form-item>
-                <el-form-item label="Jumlah Koli" prop="total">
-                    <el-input-number
-                        class="w-full"
-                        v-model="TAMBAH_BARANG.total"
-                        :min="0"
-                        controls-position="right"
-                    />
                 </el-form-item>
                 <el-form-item label="Supplier" prop="supplier_id">
                     <el-select v-model="TAMBAH_BARANG.supplier_id" filterable class="w-full">
@@ -45,13 +37,32 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Gudang" prop="gudang_id" >
-                    <el-select filterable class="w-full" v-model="TAMBAH_BARANG.gudang_id">
+                    <el-select filterable class="w-full" v-model="TAMBAH_BARANG.gudang_id" @change="getRack()">
                         <el-option
                             v-for="item in Gudang"
                             :label="item.label"
                             :value="item.id"
                         />
                     </el-select>
+                </el-form-item>
+            </div>
+            <div class="grid grid-cols-4 gap-2">
+                <el-form-item label="Rack" prop="rack_id" >
+                    <el-select filterable class="w-full" v-model="TAMBAH_BARANG.rack_id">
+                        <el-option
+                            v-for="item in dataRack"
+                            :label="item.label"
+                            :value="item.id"
+                        />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="Jumlah Koli" prop="total">
+                    <el-input-number
+                        class="w-full"
+                        v-model="TAMBAH_BARANG.total"
+                        :min="0"
+                        controls-position="right"
+                    />
                 </el-form-item>
             </div>
             <div>
@@ -128,6 +139,7 @@ const TAMBAH_BARANG = reactive({
     supplier_id: '',
     gudang_id :'',
     keterangan : '',
+    rack_id : ''
 })
 
 const rules = reactive<FormRules>({
@@ -178,6 +190,16 @@ const Delete = (id) => {
         }
     })
 }
+const dataRack = reactive([])
+const getRack = async() =>{
+    const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"gudang/rack/master",{
+        params : {
+            gudang_id : TAMBAH_BARANG.gudang_id
+        }
+    })
+
+    Object.assign(dataRack,data.data.data)
+}
 
 const Submit = async (formEl: FormInstance | undefined) => {
     loading.value = true
@@ -191,6 +213,7 @@ const Submit = async (formEl: FormInstance | undefined) => {
                 supplier_id: TAMBAH_BARANG.supplier_id,
                 gudang_id :TAMBAH_BARANG.gudang_id,
                 keterangan : TAMBAH_BARANG.keterangan,
+                rack_id : TAMBAH_BARANG.rack_id,
                 details : addData,
 
             }
@@ -203,6 +226,7 @@ const Submit = async (formEl: FormInstance | undefined) => {
                     supplier_id: '',
                     gudang_id :'',
                     keterangan : '',
+                    rack : ''
                 })
                 loading.value = false
                 addData.length = 0
