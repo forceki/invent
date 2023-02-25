@@ -228,11 +228,9 @@ const addRackLocal = () => {
     racks.details.push({rack_name : nama_rak.value})
     nama_rak.value = ""
 
-    console.log(racks)
 }
 
 const deleteRackLocal = (e) => {
-    console.log(e)
     racks.details.splice(e,1)
 }   
 
@@ -272,7 +270,6 @@ const getData = async()=>{
         });
         Object.assign(tableData,item)   
 
-        console.log(tableData)
 
     } catch (error) {
         FailledSwal("erorr!", error.response.data.message)
@@ -337,7 +334,6 @@ const Submit = async (formEl: FormInstance | undefined) => {
                 loading.value = false
                 getData()
              } catch (error) {
-                console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)
                 loading.value = false
             }
@@ -371,7 +367,6 @@ const Update = async (formEl: FormInstance | undefined) => {
                 loading.value = false
                 getData()
              } catch (error) {
-                console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)
                 loading.value = false
             }

@@ -7,7 +7,7 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      redirect: "/dashboard",
+      redirect: "/checkins",
     },
     {
       path: '/login',
@@ -137,7 +137,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-  console.log(Cookies.get('access_token'))
     if(!to.meta.NON_LOGGER && !Cookies.get('access_token')) router.push('/login')
 
   next()

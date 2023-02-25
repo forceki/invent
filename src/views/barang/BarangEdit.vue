@@ -106,7 +106,6 @@ const Submit = async (formEl: FormInstance | undefined) => {
                 loading.value = false
                 routers.push("/item")
              } catch (error) {
-                console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)
                 loading.value = false
             }
@@ -134,7 +133,6 @@ const rules = reactive<FormRules>({
 })
 
 const parse = (data) => {
-    console.log(data)
     var message = []
     data.forEach(element => {
         message.push(element.Message)
@@ -156,7 +154,6 @@ const getKategori = async() => {
     }
 }
 const getItem = async()=>{
-    console.log(params)
     try {
 
         const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"items",{
@@ -165,7 +162,6 @@ const getItem = async()=>{
             }
         })
     
-        console.log(data)
         Object.assign(TAMBAH_BARANG,data.data.data[0])
         
     } catch (error) {

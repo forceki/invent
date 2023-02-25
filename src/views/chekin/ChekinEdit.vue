@@ -185,7 +185,6 @@ const getRack = async() =>{
 
     Object.assign(dataRack,data.data.data)
 
-    console.log(data.data.data)
 }
 
 
@@ -203,7 +202,6 @@ const addItem = (e) => {
 }
 
 const Delete = (id) => {
-    console.log(id)
     addData.map((item,index) => {
         if(item.id == id){
             addData.splice(index,1)
@@ -224,7 +222,6 @@ const GetData = async()=>{
         }
     })
 
-    console.log(data)
     const res = data.data.data
     TAMBAH_BARANG.gudang_id = res.gudang_id
     TAMBAH_BARANG.keterangan = res.keterangan
@@ -277,7 +274,6 @@ const Submit = async (formEl: FormInstance | undefined) => {
                     routers.push("/checkins")
                 }, 200);
              } catch (error) {
-                console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)
                 loading.value = false
             }

@@ -178,7 +178,6 @@ const getDetail = async(row)=>{
   row.items = data.data.data.items
   
   Object.assign(dataModal,row)
-  console.log(dataModal)
   openModal.value = true
 }
 

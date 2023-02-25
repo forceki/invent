@@ -182,7 +182,6 @@ const addItem = (e) => {
 }
 
 const Delete = (id) => {
-    console.log(id)
     addData.map((item,index) => {
         if(item.id == id){
             addData.splice(index,1)
@@ -232,7 +231,6 @@ const Submit = async (formEl: FormInstance | undefined) => {
                 addData.length = 0
                 router.push("/checkins")
              } catch (error) {
-                console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)
                 loading.value = false
             }

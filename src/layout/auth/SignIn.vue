@@ -73,9 +73,8 @@ const USER = user();
 
 const chceking = async () => {
     const check = Cookies.get("access_token")
-    console.log(check)
     if(check){
-        router.push("/dashboard");
+        router.push("/checkins");
     }
 }
 
@@ -93,13 +92,12 @@ const LOGGING = async (formEl: FormInstance | undefined) => {
 
                 USER.SET_USER(data.data.data.user);
                 // USER.setUserModule(data.data.module);
-                router.push("/dashboard");
+                router.push("/checkins");
                 // } else {
                 // window.location.href = import.meta.env.VITE_API_LOGIN_PAGE_SSO;
                 // }
             } catch (error) {
             // window.location.href = import.meta.env.VITE_API_LOGIN_PAGE_SSO;
-                console.log(error);
                 FailledSwal("erorr!", error.response.data.message)
 
             }

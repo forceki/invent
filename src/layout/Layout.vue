@@ -86,13 +86,13 @@ import BottomBar from './bottombar/BottomBar.vue'
 import Toasts from '../components/Toaster/Toasts.vue'
 import {useLayoutStore} from '../stores/layout'
 import SyncLoader from '../components/Loader/SyncLoader.vue'
-import { useRoute } from 'vue-router'
+import { useRoute, } from 'vue-router'
 import 'moment/dist/locale/id'
 import moment from 'moment'
 import SignIn from './auth/SignIn.vue'
 import Cookies from 'js-cookie'
 import router from '@/router';
-
+import axios from 'axios'
 
 moment.locale('id')
 
@@ -103,12 +103,30 @@ const sTop = () => {
 }
 const route = useRoute();
 
-const chceking = async () => {
-    const check = Cookies.get("access_token")
-    if(check == null || check == "" || check == undefined){
-        router.push("/login");
+const chceking = async() => {
+
+
+    try {
+        
+        const data = await axios.get(import.meta.env.VITE_API_ORIGIN+"auth/me")
+
+    } catch (error) {
+        Cookies.remove('access_token');
+        setTimeout(() => {
+            router.push("login")
+        }, 200);
     }
+    
+
 }
+
+const check = Cookies.get("access_token")
+if(check){
+    console.log(check)
+    chceking()
+}
+
+
 
 onMounted(
     () => {
@@ -135,12 +153,12 @@ onMounted(
             }
         } , false);
 
-        document.addEventListener("keyup", function (e) {
-            keys[e.keyCode]=false;
-            // stop();
-        }, false);
 
-        chceking()
+        // document.addEventListener("keyup", function (e) {
+        //     keys[e.keyCode]=false;
+        //     // stop();
+        // }, false);
+
             
         }
 );

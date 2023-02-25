@@ -100,7 +100,6 @@ const Submit = async (formEl: FormInstance | undefined) => {
                 loading.value = false
                 router.push("/item")
              } catch (error) {
-                console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)
                 loading.value = false
             }

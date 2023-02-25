@@ -177,7 +177,6 @@ const Submit = async (formEl: FormInstance | undefined) => {
                 loading.value = false
                 getData()
              } catch (error) {
-                console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)
                 loading.value = false
             }
@@ -209,7 +208,6 @@ const Update = async (formEl: FormInstance | undefined) => {
                 loading.value = false
                 getData()
              } catch (error) {
-                console.log(error)
                 FailledSwal("erorr!", error.response.data.data ? parse(error.response.data.data) : error.response.data.message)
                 loading.value = false
             }
