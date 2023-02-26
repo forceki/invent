@@ -29,6 +29,7 @@
           table-layout="auto" 
           height="300"
           class="shadow-lg mt-4"
+          :row-class-name="tableRowClassName"
           :header-cell-style="{background:'#ECECEC', color:'black'}">
               <el-table-column type="index" :index="indexMethod" label="#"/>
               <el-table-column prop="tanggal" label="Tanggal" >
@@ -101,7 +102,7 @@
         <el-table-column property="qty" label="qty" width="150" />
       </el-table>
       <template #footer>
-        <span class="dialog-footer">
+        <span v-if="dataModal.status == 0" class="dialog-footer">
             <el-button type="primary" @click="ConfirmRetur">Proses</el-button>
         </span>
         </template>
@@ -149,13 +150,15 @@ const indexMethod = (index: number) => {
 }
 
 const dataModal = reactive({
+  id : "",
   tanggal : '',
   gudang : '',
   supplier : '',
   total : '',
   keterangan : '',
   items : [],
-  rack_name : ""
+  rack_name : "",
+  status : 0
 })
 
 const tableData = reactive([])
@@ -187,13 +190,25 @@ const ConfirmRetur = () =>{
   cancelButtonColor: '#d33',
   confirmButtonText: 'Yaa',
   cancelButtonText : "Tidak"
-}).then((result) => {
+}).then(async(result) => {
   if (result.isConfirmed) {
-    // Swal.fire(
-    //   'Deleted!',
-    //   'Your file has been deleted.',
-    //   'success'
-    // )
+    await axios.get(import.meta.env.VITE_API_ORIGIN+"checkin/up-status",{
+      params : {
+        id : dataModal.id,
+        status : "yes"
+      }
+    })
+    SuccessSwal("Success","Berhasil Meretur")
+    getCheckins()
+  }else{
+    await axios.get(import.meta.env.VITE_API_ORIGIN+"checkin/up-status",{
+      params : {
+        id : dataModal.id,
+        status : "no"
+      }
+    })
+    SuccessSwal("Success","Berhasil Memasukan")
+    getCheckins()
   }
 })
 }
@@ -209,6 +224,7 @@ const getDetail = async(row)=>{
   row.items = data.data.data.items
   
   Object.assign(dataModal,row)
+  console.log(dataModal)
   openModal.value = true
 }
 
@@ -228,6 +244,18 @@ const Delete = async(id) => {
       FailledSwal("erorr!", error.response.data.message)
     }
   }
+}
+
+
+const tableRowClassName = ({
+  row,
+  rowIndex,
+}) => {
+   if(row.status == 0){
+    return 'warning-row'
+   }
+
+  return ''
 }
 
 const data = reactive({
@@ -255,6 +283,9 @@ const options = [
 </script>
 
 <style>
+.el-table .warning-row {
+  --el-table-tr-bg-color: rgba(246, 246, 181, 0.922);
+}
 .el-pagination.is-background .btn-next,
 .el-pagination.is-background .btn-prev,
 .el-pagination.is-background .el-pager li {

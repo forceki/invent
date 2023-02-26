@@ -219,6 +219,7 @@ const AddRack = async() =>{
         setTimeout(() => {
             openDetail.value = false
         }, 200);
+        getData()
     } catch (error) {
         FailledSwal("erorr!", error.response.data.message)
     }

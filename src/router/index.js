@@ -54,6 +54,13 @@ const router = createRouter({
           padding : true,
           component : defineAsyncComponent(
             () => import('../views/barang/BarangEdit.vue'))
+        },
+        {
+          path : '/item/detail/:id',
+          name : 'detail-item',
+          padding : true,
+          component : defineAsyncComponent(
+            () => import('../views/barang/BarangDetail.vue'))
         }
       ]
     },
